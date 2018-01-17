@@ -1,0 +1,11 @@
+<li class={{completed ? "completed": ""}}>
+  <input type="checkbox" on:change="fire('toggle', { id })" checked={{completed}}>
+  <span>{{description}}</span>
+  <button on:click="fire('remove', { id })">X</button>
+</li>
+
+<style>
+  .completed {
+    color: red;
+  }
+</style>

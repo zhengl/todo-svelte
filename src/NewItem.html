@@ -1,0 +1,17 @@
+<input ref:input on:enter="newItem(this.value)" placeholder="What needs to be done?" autofocus>
+
+<script>
+  import enter from './enter';
+
+  export default {
+    methods: {
+      newItem(value) {
+        this.fire('newTodo', { value });
+        this.refs.input.value = '';
+      }
+    },
+    events: {
+      enter,
+    }
+  }
+</script>

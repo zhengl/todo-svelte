@@ -1,0 +1,51 @@
+<NewItem on:newTodo="addNewItem(event.value)" />
+<ItemList
+  on:removeTodo="removeItem(event.id)"
+  on:toggleTodo="toggleItem(event.id)"
+  :filter
+  :items
+/>
+<div>
+  <label><input type="radio" bind:group="filterName" value="all">All</label>
+  <label><input type="radio" bind:group="filterName" value="active">Active</label>
+  <label><input type="radio" bind:group="filterName" value="completed">Completed</label>
+</div>
+
+<style>
+</style>
+
+<script>
+  import NewItem from './NewItem.html';
+  import ItemList from './ItemList.html';
+
+  const FILTERS = {
+    all: Boolean,
+    active: item => !item.completed,
+    completed: item => item.completed,
+  }
+
+  export default {
+    methods: {
+      addNewItem(description) {
+        const items = this.get('items');
+        this.set({ items: [...items, { id: items.length + 1, description }] });
+      },
+      toggleItem(id) {
+        const items = this.get('items');
+
+        this.set({ items: items.map(item => item.id === id ? Object.assign(item, { completed: !item.completed }) : item) });
+      },
+      removeItem(id) {
+        const items = this.get('items');
+        this.set({ items: items.filter(item => item.id !== id) });
+      }
+    },
+    computed: {
+      filter: filterName => FILTERS[filterName || 'all']
+    },
+    components: {
+      NewItem,
+      ItemList,
+    }
+  }
+</script>

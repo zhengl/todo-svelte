@@ -1,0 +1,24 @@
+<ul>
+  {{#each filteredItems as item}}
+    <Item
+      id={{item.id}}
+      description={{item.description}}
+      completed={{item.completed}}
+      on:toggle="fire('toggleTodo', event)"
+      on:remove="fire('removeTodo', event)"
+    />
+  {{/each}}
+</ul>
+
+<script>
+  import Item from './Item.html';
+
+  export default {
+    computed: {
+      filteredItems: (items, filter) => items.filter(filter)
+    },
+    components: {
+      Item,
+    }
+  }
+</script>
